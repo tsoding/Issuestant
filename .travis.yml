@@ -1,3 +1,7 @@
 language: scala
 scala:
   - 2.11.8
+script:
+  - sbt clean build coverage test
+after_success:
+  - sbt coveralls
