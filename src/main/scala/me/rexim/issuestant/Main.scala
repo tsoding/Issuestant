@@ -7,7 +7,11 @@ import io.circe.syntax._
 
 import scala.io._
 
+case class IssueWithParent(parentNumber: Option[Int], issue: Issue);
+
 object Main {
+  def extractParent(issue: Issue): IssueWithParent = ???
+
   def buildSplitForest(issues: List[Issue]): List[SplitIssueTree] = ???
 
   def main(args: Array[String]): Unit = {
