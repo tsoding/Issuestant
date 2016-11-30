@@ -10,7 +10,12 @@ import scala.io._
 case class IssueWithParent(parentNumber: Option[Int], issue: Issue);
 
 object Main {
-  def extractParent(issue: Issue): IssueWithParent = ???
+  def extractParent(issue: Issue): IssueWithParent = {
+    val splitCookie = "(?i)split from #([0-9]+)".r
+    IssueWithParent(
+      splitCookie.findFirstMatchIn(issue.body).map(m => Integer.parseInt(m.group(1))),
+      issue)
+  }
 
   def buildSplitForest(issues: List[Issue]): List[SplitIssueTree] = ???
 
