@@ -40,7 +40,7 @@ class BuildSplitForestSpec extends FlatSpec with Matchers {
       tree.copy(children = sortForest(tree.children))
     }
 
-  "Build split forest operation" should "build split forest from plain set of issues" ignore {
+  "Build split forest operation" should "build split forest from plain set of issues" in {
     sortForest(Main.buildSplitForest(inputIssues)) should be (sortForest(expectedForest))
   }
 }

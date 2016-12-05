@@ -1,7 +1,7 @@
 package me.rexim.issuestant
 
 object SplitIssueTree {
-  def fromIssue(issue: Issue) = SplitIssueTree(issue.number, issue.title, issue.html_url, List())
+  def fromIssue(issue: Issue) = SplitIssueTree(issue.number, issue.title, issue.html_url, Nil)
 }
 
 case class SplitIssueTree(number: Int, title: String, htmlUrl: String, children: List[SplitIssueTree]) {
