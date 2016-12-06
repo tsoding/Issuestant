@@ -30,4 +30,9 @@ class ExtractParentSpecs extends FlatSpec with Matchers {
          |From #123 we already learned that […]""".stripMargin)
     Main.extractParent(issue).parentNumber should be (None)
   }
+
+  it should "handle split cookies that have `from` misspelled as `form`" in {
+    val issue = Issue(1, "Foo", "http://example.com", "split form #2\n\nFoo bar")
+    Main.extractParent(issue).parentNumber should be (Some(2))
+  }
 }
