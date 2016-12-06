@@ -51,7 +51,7 @@ object Main {
     val issues =
       decode[List[Issue]](Source.fromFile("issues.json").mkString)
 
-    println(issues.map(issues => buildSplitForest(issues).foreach(_.print())))
+    issues.foreach(issues => buildSplitForest(issues).foreach(_.print()))
 
   }
 }
