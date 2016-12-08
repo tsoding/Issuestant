@@ -13,4 +13,6 @@ libraryDependencies ++= Seq(
   "io.circe" %% "circe-parser" % "0.5.1"
 )
 
+wartremoverErrors ++= Warts.unsafe
+
 enablePlugins(JavaAppPackaging)
