@@ -48,6 +48,7 @@ object Main {
   }
 
   def main(args: Array[String]): Unit = {
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     val issues =
       decode[List[Issue]](Source.fromFile("issues.json").mkString)
 
