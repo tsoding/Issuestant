@@ -48,7 +48,7 @@ object Main {
   }
 
   def main(args: Array[String]): Unit = {
-    // Circe macros expansions use asInstancOf, which makes
+    // Circe macros expansions use asInstanceOf, which makes
     // Wartremover freak out a little bit. To avoid that we just
     // ignore this particular Wart here.
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
