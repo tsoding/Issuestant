@@ -5,9 +5,13 @@ object SplitIssueTree {
 }
 
 case class SplitIssueTree(number: Int, title: String, htmlUrl: String, children: List[SplitIssueTree]) {
-  def print(level: Int = 0): Unit = {
+  private def printLevel(level: Int): Unit = {
     val padding = (1 to level).map(_ => ' ').mkString
     println(s"${padding}${number}: ${title}")
-    children.foreach(_.print(level + 1))
+    children.foreach(_.printLevel(level + 1))
+  }
+
+  def print(): Unit = {
+    printLevel(0)
   }
 }
