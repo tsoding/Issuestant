@@ -13,6 +13,13 @@ libraryDependencies ++= Seq(
   "io.circe" %% "circe-parser" % "0.5.1"
 )
 
-wartremoverErrors ++= Warts.unsafe
+wartremoverErrors in (Compile, compile) ++= Warts.unsafe
+
+wartremoverErrors in Test ++= Warts.unsafe diff Seq(
+  // We exclude only the Warts that are broken by idiomatically
+  // correct ScalaTest code
+
+  Wart.NonUnitStatements // All ScalaTest assertions return Assertion trait marker instead of Unit
+)
 
 enablePlugins(JavaAppPackaging)
