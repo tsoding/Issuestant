@@ -1,6 +1,7 @@
 package me.rexim.issuestant
 
 import org.scalatest._
+import me.rexim.issuestant.github._
 
 class SplitIssueTreeSpec extends FlatSpec with Matchers {
   "SplitIssueTree" should "be constructable from a regular issue" in {

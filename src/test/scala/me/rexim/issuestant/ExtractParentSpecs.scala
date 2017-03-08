@@ -1,6 +1,7 @@
 package me.rexim.issuestant
 
 import org.scalatest._
+import me.rexim.issuestant.github._
 
 class ExtractParentSpecs extends FlatSpec with Matchers {
   "extractParent operation" should "extract parent number from the issue's body if it's present" in {
