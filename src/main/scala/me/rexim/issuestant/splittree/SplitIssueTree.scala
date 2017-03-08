@@ -1,4 +1,4 @@
-package me.rexim.issuestant
+package me.rexim.issuestant.splittree
 
 import me.rexim.issuestant.github._
 

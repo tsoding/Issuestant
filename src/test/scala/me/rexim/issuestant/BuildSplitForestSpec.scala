@@ -2,6 +2,7 @@ package me.rexim.issuestant
 
 import org.scalatest._
 import me.rexim.issuestant.github._
+import me.rexim.issuestant.splittree._
 
 class BuildSplitForestSpec extends FlatSpec with Matchers {
   /**

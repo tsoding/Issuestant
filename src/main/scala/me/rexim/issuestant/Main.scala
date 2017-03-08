@@ -7,8 +7,8 @@ import io.circe.syntax._
 
 import scala.io._
 
-
 import me.rexim.issuestant.github._
+import me.rexim.issuestant.splittree._
 
 case class IssueWithParent(parentNumber: Option[Int], issue: Issue);
 
