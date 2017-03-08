@@ -10,43 +10,29 @@ import scala.io._
 import me.rexim.issuestant.github._
 import me.rexim.issuestant.splittree._
 
-case class IssueWithParent(parentNumber: Option[Int], issue: Issue);
-
 object Main {
-  def extractParent(issue: Issue): IssueWithParent = {
-    val splitCookie = "(?i)split +(?:from|form) +#([0-9]+)".r
-    IssueWithParent(
-      splitCookie
-        .findFirstMatchIn(issue.body)
-        .map(m => Integer.parseInt(m.group(1))),
-      issue)
-  }
-
   def buildSplitForest(issues: List[Issue]): List[SplitIssueTree] = {
     val initialForestMap: Map[Int, SplitIssueTree] =
       issues.map { issue =>
         issue.number -> SplitIssueTree.fromIssue(issue)
       }.toMap
 
-    val issuesWithParents: List[IssueWithParent] =
-      issues.map(extractParent)
-
     val forestRootNumbers: Set[Int] =
-      issuesWithParents
+      issues
         .filter(_.parentNumber.isEmpty)
-        .map(_.issue.number)
+        .map(_.number)
         .toSet
 
-    issuesWithParents.foldLeft(initialForestMap) {
-      case (forestMap, IssueWithParent(Some(parentNumber), issue)) =>
-        val Some(parent) = forestMap.get(parentNumber)
-        val Some(child) = forestMap.get(issue.number)
+    issues.foldLeft(initialForestMap) {
+      case (forestMap, issue) =>
+        issue.parentNumber.map { parentNumber =>
+          val Some(parent) = forestMap.get(parentNumber)
+          val Some(child) = forestMap.get(issue.number)
 
-        forestMap.updated(
-          parentNumber,
-          parent.copy(children = child :: parent.children))
-
-      case (forestMap, _) => forestMap
+          forestMap.updated(
+            parentNumber,
+            parent.copy(children = child :: parent.children))
+        } getOrElse(forestMap)
     }.values.filter(tree => forestRootNumbers.contains(tree.number)).toList
   }
 
