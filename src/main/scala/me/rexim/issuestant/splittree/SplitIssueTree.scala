@@ -7,13 +7,10 @@ object SplitIssueTree {
 }
 
 case class SplitIssueTree(number: Int, title: String, htmlUrl: String, children: List[SplitIssueTree]) {
-  private def printLevel(level: Int): Unit = {
+  private def toStringLevel(level: Int): List[String] = {
     val padding = (1 to level).map(_ => ' ').mkString
-    println(s"${padding}${number}: ${title}")
-    children.foreach(_.printLevel(level + 1))
+    s"${padding}${number}: ${title}" :: children.flatMap(_.toStringLevel(level + 1))
   }
 
-  def print(): Unit = {
-    printLevel(0)
-  }
+  override def toString(): String = toStringLevel(0).mkString("\n")
 }
