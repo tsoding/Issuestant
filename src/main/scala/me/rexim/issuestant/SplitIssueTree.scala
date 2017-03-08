@@ -1,5 +1,7 @@
 package me.rexim.issuestant
 
+import me.rexim.issuestant.github._
+
 object SplitIssueTree {
   def fromIssue(issue: Issue) = SplitIssueTree(issue.number, issue.title, issue.html_url, Nil)
 }
