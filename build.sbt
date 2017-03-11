@@ -5,7 +5,7 @@ version := "1.0"
 scalaVersion := "2.11.8"
 
 val http4sVersion = "0.15.6"
-val circeVersion = "0.5.1"
+val circeVersion = "0.7.0"
 
 scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature")
 
