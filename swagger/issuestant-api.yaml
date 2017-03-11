@@ -1,0 +1,36 @@
+# TODO: Convenient way to generate interactive documentation from swagger spec
+#
+# Probably a separate sbt command. Just something convenient, so we don't have to
+# worry about downloading and setting up local thirdparty tools and everything.
+
+swagger: '2.0'
+
+info:
+  version: "0.0.1"
+  title: Issuestant API
+  license:
+    name: MIT
+
+schemes:
+  - http
+
+consumes:
+  - application/json
+
+produces:
+  - application/json
+
+paths:
+  /hello:
+    get:
+      description: |
+        Testing API call that responses with a hello message
+      responses:
+        200:
+          description: Successful response
+          schema:
+            title: Message
+            type: object
+            properties:
+              message:
+                type: string
