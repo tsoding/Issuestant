@@ -1,4 +1,4 @@
-package me.rexim.issuestant
+package me.rexim.issuestant.github
 
 case class Issue (
   number: Int,

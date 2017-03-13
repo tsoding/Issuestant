@@ -1,0 +1,43 @@
+# TODO: Improve swagger experience
+#
+# Right now it's just a YAML file with the API specification. Anyone can use
+# it however they want. I'd like to improve this experience somehow. For example,
+# - generate this spec directly from the code:
+#   - https://github.com/http4s/rho
+#   - https://github.com/swagger-api/swagger-core/wiki/Annotations-1.5.X
+#   - ...
+# - serve Swagger UI as the part of the application
+#
+# Any other ideas are welcome.
+
+swagger: '2.0'
+
+info:
+  version: "0.0.1"
+  title: Issuestant API
+  license:
+    name: MIT
+
+schemes:
+  - http
+
+consumes:
+  - application/json
+
+produces:
+  - application/json
+
+paths:
+  /hello:
+    get:
+      description: |
+        Testing API call that responses with a hello message
+      responses:
+        200:
+          description: Successful response
+          schema:
+            title: Message
+            type: object
+            properties:
+              message:
+                type: string
