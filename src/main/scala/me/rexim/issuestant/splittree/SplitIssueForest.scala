@@ -1,6 +1,6 @@
 package me.rexim.issuestant.splittree
 
-import me.rexim.issuestant.github._
+import me.rexim.issuestant.github.model._
 
 class SplitIssueForest(issues: List[Issue]) {
   private def sortForest(forest: List[SplitIssueTree]): List[SplitIssueTree] =

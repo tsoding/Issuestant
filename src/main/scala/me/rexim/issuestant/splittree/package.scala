@@ -1,6 +1,6 @@
 package me.rexim.issuestant
 
-import me.rexim.issuestant.github._
+import me.rexim.issuestant.github.model._
 
 package object splittree {
   implicit class IssueWithParent(issue: Issue) {
