@@ -13,6 +13,7 @@ import me.rexim.issuestant.github.model._
   *
   * @param eventSource the source of GitHub events
   */
+// $COVERAGE-OFF$
 class Permalink(eventSource: EventsSource) {
   /** An update iteration of Permalink service
     *
@@ -24,3 +25,4 @@ class Permalink(eventSource: EventsSource) {
     */
   def update: Task[Permalink] = ???
 }
+// $COVERAGE-ON$
