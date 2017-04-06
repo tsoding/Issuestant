@@ -26,6 +26,7 @@ import org.http4s.EntityDecoder
   * @param owner the owner of the repo
   * @param repo the name of the repo
   */
+// $COVERAGE-OFF$
 class EventsSource (client: Client, owner: String, repo: String) {
   /** Recent events recieved by the previous invocation of nextEvents
     * method
@@ -40,3 +41,4 @@ class EventsSource (client: Client, owner: String, repo: String) {
     */
   def nextEvents(): Task[EventsSource] = ???
 }
+// $COVERAGE-ON$
