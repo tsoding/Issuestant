@@ -27,7 +27,7 @@ import org.http4s.EntityDecoder
   * @param repo the name of the repo
   */
 class EventsSource (client: Client, owner: String, repo: String) {
-  /** Recent events recieved by the previous invokation of nextEvents
+  /** Recent events recieved by the previous invocation of nextEvents
     * method
     *
     * @return recent events
