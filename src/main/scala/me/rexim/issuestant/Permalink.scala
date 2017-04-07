@@ -6,6 +6,9 @@ import me.rexim.issuestant.github.model._
 import me.rexim.issuestant.polling._
 
 // TODO(1cdf1e3c-d19b-493d-9d33-f88c92ee24e3): Implement Permalink
+//
+// Introduce dependencies that enable Permalink with modifying
+// comments, modifying issue descriptions and fileing issues.
 
 /** Issuestant service for Permalink protocol (see doc/Permalink.md)
   *
