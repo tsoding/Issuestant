@@ -1,7 +1,7 @@
 package me.rexim.issuestant.splittree
 
 import org.scalatest._
-import me.rexim.issuestant.github._
+import me.rexim.issuestant.github.model._
 import me.rexim.issuestant.splittree._
 
 class SplitIssueForestSpec extends FlatSpec with Matchers {

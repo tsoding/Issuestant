@@ -19,7 +19,13 @@ libraryDependencies ++= Seq(
   "org.http4s" %% "http4s-dsl" % http4sVersion,
   "org.http4s" %% "http4s-blaze-server" % http4sVersion,
   "org.http4s" %% "http4s-blaze-client" % http4sVersion,
-  "org.http4s" %% "http4s-circe" % http4sVersion
+  "org.http4s" %% "http4s-circe" % http4sVersion,
+
+  "org.slf4j" % "slf4j-api" % "1.7.+",
+  "ch.qos.logback" % "logback-core" % "1.0.+",
+  "ch.qos.logback" % "logback-classic" % "1.0.+",
+  "org.clapper" %% "grizzled-scala" % "1.3",
+  "org.clapper" %% "grizzled-slf4j" % "1.0.2"
 )
 
 wartremoverErrors in (Compile, compile) ++= Warts.unsafe
