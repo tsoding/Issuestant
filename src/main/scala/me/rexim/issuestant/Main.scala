@@ -1,6 +1,6 @@
 package me.rexim.issuestant
 
-import me.rexim.issuestant.github.EventsSource
+import me.rexim.issuestant.github._
 import me.rexim.issuestant.polling._
 
 import scala.concurrent.duration.{FiniteDuration, SECONDS}
@@ -20,8 +20,14 @@ object Main extends ServerApp {
       repo = "issuestant-playground"
     )
 
+    val issueTracker = new IssueTracker (
+      client = PooledHttp1Client(),
+      owner = "tsoding",
+      repo = "issuestant-playground"
+    )
+
     new Polling (
-      service = new Permalink(eventsSource),
+      service = new Permalink(eventsSource, issueTracker),
       interval = 1000
     ).startAsync
 
