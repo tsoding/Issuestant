@@ -5,6 +5,21 @@ import me.rexim.issuestant.github.EventsSource
 import me.rexim.issuestant.github.model._
 import me.rexim.issuestant.polling._
 
+// TODO(7ca7cee3-8fdc-4f9e-bd60-c4229b64f02b): Permalink Protocol FSM
+//
+// May supersede 1cdf1e3c-d19b-493d-9d33-f88c92ee24e3
+//
+// The Permalink service should be essentially an FSM. The full set of
+// the possible states of such FSM should be represented by ADT. For
+// example
+// ```scala
+//   sealed trait PermalinkProtocol {
+//     def handleEvent(event: Event): PermalinkProtocol
+//   }
+//   case class PermalinkServingState(..) extends PermalinkProtocol
+//   case class PernalinkAskPermissionState(..) extends PermalinkProtocol
+// ```
+
 // TODO(1cdf1e3c-d19b-493d-9d33-f88c92ee24e3): Implement Permalink
 //
 // Introduce dependencies that enable Permalink with modifying
