@@ -1,10 +1,7 @@
 package me.rexim.issuestant
 
-import scalaz.syntax.traverse.ToTraverseOps
-import scalaz.std.list.listInstance
 import scalaz.concurrent.Task
-
-import me.rexim.issuestant.github._
+import me.rexim.issuestant.github.EventsSource
 import me.rexim.issuestant.github.model._
 import me.rexim.issuestant.polling._
 
@@ -21,10 +18,7 @@ import me.rexim.issuestant.polling._
   * @param eventSource the source of GitHub events
   */
 // $COVERAGE-OFF$
-class Permalink(eventSource: EventsSource, issueTracker: IssueTracker) extends Pollable {
-  // TODO(541ea327-8e87-43e7-8359-559f70847c75): Implement events handling for Permalink service
-  private def handleEvent(event: Event): Task[Unit] = ???
-
+class Permalink(eventSource: EventsSource) extends Pollable {
   /** An update iteration of Permalink service
     *
     * Polls the recent events from the event source, performs the
@@ -33,9 +27,6 @@ class Permalink(eventSource: EventsSource, issueTracker: IssueTracker) extends P
     *
     * @return next state of the Permalink service
     */
-  def update: Task[Pollable] = for {
-    _ <- eventSource.events.traverseU(handleEvent(_))
-    nextEventSource <- eventSource.nextEvents
-  } yield new Permalink(nextEventSource, issueTracker)
+  def update: Task[Pollable] = ???
 }
 // $COVERAGE-ON$
