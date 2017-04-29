@@ -15,6 +15,13 @@ import org.http4s.Status._
 import org.http4s.Method._
 import org.http4s.EntityDecoder
 
+// TODO(5af3a001-e611-42a2-9cbf-b7f64780fe76): GitHub events as a lazy stream
+//
+// May supersede 83b40d5c-6af7-4268-a2a2-960d051102ae
+//
+// Implement a lazy stream of GitHub events.All of the polling,
+// retries and error handling should be incorporated into that stream.
+
 // TODO(83b40d5c-6af7-4268-a2a2-960d051102ae): Implement EventsSource
 
 /** The source of GitHub events
