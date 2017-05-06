@@ -5,7 +5,8 @@ import io.circe.generic.auto._
 import io.circe.parser._
 import io.circe.syntax._
 
-import scalaz.concurrent.Task
+import scalaz.stream._
+import scalaz.concurrent._
 import me.rexim.issuestant.github.model.Event
 
 import org.http4s._
@@ -14,15 +15,6 @@ import org.http4s.Http4s._
 import org.http4s.Status._
 import org.http4s.Method._
 import org.http4s.EntityDecoder
-
-// TODO(5af3a001-e611-42a2-9cbf-b7f64780fe76): GitHub events as a lazy stream
-//
-// May supersede 83b40d5c-6af7-4268-a2a2-960d051102ae
-//
-// Implement a lazy stream of GitHub events.All of the polling,
-// retries and error handling should be incorporated into that stream.
-
-// TODO(83b40d5c-6af7-4268-a2a2-960d051102ae): Implement EventsSource
 
 /** The source of GitHub events
   *
@@ -35,17 +27,19 @@ import org.http4s.EntityDecoder
   */
 // $COVERAGE-OFF$
 class EventsSource (client: Client, owner: String, repo: String) {
-  /** Recent events recieved by the previous invocation of nextEvents
-    * method
-    *
-    * @return recent events
-    */
-  def events: List[Event] = ???
+  // TODO(4369af78-08f6-45d7-8399-c5ef1f97808a): Get rid of wart suppress
+  @SuppressWarnings(Array("org.wartremover.warts.Any"))
+  def events: Process[Task, Event] =
+    Process
+      .iterateEval(Response())(pollingIteration)
+      .flatMap((response) => extractEvents(response))
 
-  /** Receive next events
-    *
-    * @return next state of the EventsSource object
-    */
-  def nextEvents(): Task[EventsSource] = ???
+  // TODO(e4581c14-8db7-4e1b-90f0-0b8faec52a33): Implement EventsSource.pollingIteration
+  //
+  // Extract ETag from the previousResponse and use it for polling the next events
+  private def pollingIteration(previousResponse: Response): Task[Response] = ???
+
+  // TODO(6900c3e4-7c15-42cc-9389-de3947625ce9): Implement EventsSource.extractEvents
+  private def extractEvents(response: Response): Process[Task, Event] = ???
 }
 // $COVERAGE-ON$
