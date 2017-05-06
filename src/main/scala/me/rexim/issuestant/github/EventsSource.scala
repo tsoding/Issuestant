@@ -36,7 +36,7 @@ class EventsSource (client: Client, owner: String, repo: String) {
 
   // TODO(e4581c14-8db7-4e1b-90f0-0b8faec52a33): Implement EventsSource.pollingIteration
   //
-  // Exctract ETag from the previousResponse and use it for polling the next events
+  // Extract ETag from the previousResponse and use it for polling the next events
   private def pollingIteration(previousResponse: Response): Task[Response] = ???
 
   // TODO(6900c3e4-7c15-42cc-9389-de3947625ce9): Implement EventsSource.extractEvents
