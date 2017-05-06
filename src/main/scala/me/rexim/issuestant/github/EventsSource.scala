@@ -27,6 +27,7 @@ import org.http4s.EntityDecoder
   */
 // $COVERAGE-OFF$
 class EventsSource (client: Client, owner: String, repo: String) {
+  // TODO(4369af78-08f6-45d7-8399-c5ef1f97808a): Get rid of wart suppress
   @SuppressWarnings(Array("org.wartremover.warts.Any"))
   def events: Process[Task, Event] =
     Process
