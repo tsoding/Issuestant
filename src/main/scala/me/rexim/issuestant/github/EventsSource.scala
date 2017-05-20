@@ -30,7 +30,6 @@ import scalaz._
 // $COVERAGE-OFF$
 class EventsSource (client: Client, owner: String, repo: String) {
 
-  // private lazy val githubApiUrl = s"http://asoftmurmur.com/"
   private lazy val \/-(githubApiUri) = Uri.fromString(s"https://api.github.com/repos/$owner/$repo/issues/events")
 
   // TODO(4369af78-08f6-45d7-8399-c5ef1f97808a): Get rid of wart suppress
