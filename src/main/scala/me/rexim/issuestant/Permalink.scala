@@ -6,7 +6,7 @@ import me.rexim.issuestant.github.model._
 
 // TODO(#42): Permalink Protocol FSM
 //
-// May supersede 1cdf1e3c-d19b-493d-9d33-f88c92ee24e3
+// May supersede #37
 //
 // The Permalink service should be essentially an FSM. The full set of
 // the possible states of such FSM should be represented by ADT. For
@@ -19,7 +19,7 @@ import me.rexim.issuestant.github.model._
 //   case class PernalinkAskPermissionState(..) extends PermalinkProtocol
 // ```
 
-// TODO(1cdf1e3c-d19b-493d-9d33-f88c92ee24e3): Implement Permalink
+// TODO(#37): Implement Permalink
 //
 // Introduce dependencies that enable Permalink with modifying
 // comments, modifying issue descriptions and fileing issues.
