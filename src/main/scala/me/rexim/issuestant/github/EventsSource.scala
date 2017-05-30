@@ -28,31 +28,11 @@ import scalaz._
   * @param repo the name of the repo
   */
 // $COVERAGE-OFF$
-class EventsSource (client: Client, owner: String, repo: String) {
-
-  private lazy val \/-(githubApiUri) = Uri.fromString(s"https://api.github.com/repos/$owner/$repo/issues/events")
+class EventsSource (etagPolling: EtagPolling) {
 
   // TODO(#46): Get rid of wart suppress
   @SuppressWarnings(Array("org.wartremover.warts.Any"))
-  def events: Process[Task, Event] = responses.flatMap(extractEvents)
-
-  private def responses: Process[Task, Response] =
-    Process.iterateEval(Response())(pollingIteration)
-
-  private def getETag(response: Response): Option[String] =
-    response.headers.get(CaseInsensitiveString("ETag")).map(_.value)
-
-  private def nextRequest(previousResponse: Response): Request =
-    Request (
-      uri = githubApiUri,
-      headers =
-        getETag(previousResponse)
-          .map(e => Headers(Header("If-None-Match", e)))
-          .getOrElse(Headers.empty)
-    )
-
-  def pollingIteration(previousResponse: Response): Task[Response] =
-    client.fetch[Response](nextRequest(previousResponse))((x) => Task(x))
+  def events: Process[Task, Event] = etagPolling.responses.flatMap(extractEvents)
 
   // TODO(#48): Implement EventsSource.extractEvents
   private def extractEvents(response: Response): Process[Task, Event] = ???

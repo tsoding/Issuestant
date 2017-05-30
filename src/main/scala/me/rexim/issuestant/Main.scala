@@ -1,6 +1,6 @@
 package me.rexim.issuestant
 
-import me.rexim.issuestant.github.EventsSource
+import me.rexim.issuestant.github.{EventsSource, EtagPolling}
 
 import scala.concurrent.duration.{FiniteDuration, SECONDS}
 
@@ -13,11 +13,11 @@ import org.http4s.client.blaze._
 object Main extends ServerApp {
   // TODO(#33): Use the HTTP port passed by heroku
   override def server(args: List[String]): Task[Server] = {
-    new Permalink(new EventsSource (
+    new Permalink(new EventsSource(new EtagPolling(
       client = PooledHttp1Client(),
       owner = "tsoding",
       repo = "issuestant-playground"
-    )).asTask.runAsync { _ => }
+    ))).asTask.runAsync { _ => }
 
     BlazeBuilder.bindHttp(8080, "localhost").mountService(HelloService.service, "/api").start
   }
