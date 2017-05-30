@@ -54,7 +54,7 @@ class EventsSource (client: Client, owner: String, repo: String) {
   def pollingIteration(previousResponse: Response): Task[Response] =
     client.fetch[Response](nextRequest(previousResponse))((x) => Task(x))
 
-  // TODO(6900c3e4-7c15-42cc-9389-de3947625ce9): Implement EventsSource.extractEvents
+  // TODO(#48): Implement EventsSource.extractEvents
   private def extractEvents(response: Response): Process[Task, Event] = ???
 }
 // $COVERAGE-ON$
