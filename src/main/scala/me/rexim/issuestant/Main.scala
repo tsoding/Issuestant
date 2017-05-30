@@ -1,6 +1,6 @@
 package me.rexim.issuestant
 
-import me.rexim.issuestant.github.{EventsSource, EtagPolling}
+import me.rexim.issuestant.github._
 
 import scala.concurrent.duration.{FiniteDuration, SECONDS}
 
@@ -15,8 +15,10 @@ object Main extends ServerApp {
   override def server(args: List[String]): Task[Server] = {
     new Permalink(new EventsSource(new EtagPolling(
       client = PooledHttp1Client(),
-      owner = "tsoding",
-      repo = "issuestant-playground"
+      pollingUri = new RepoEventsUri(
+        owner = "tsoding",
+        repo = "issuestant-playground"
+      ).asUri
     ))).asTask.runAsync { _ => }
 
     BlazeBuilder.bindHttp(8080, "localhost").mountService(HelloService.service, "/api").start

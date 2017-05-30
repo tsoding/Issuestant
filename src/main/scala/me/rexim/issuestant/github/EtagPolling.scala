@@ -8,9 +8,7 @@ import scalaz._
 import scalaz.stream._
 import scalaz.concurrent._
 
-class EtagPolling(client: Client, owner: String, repo: String) {
-  private lazy val \/-(githubApiUri) = Uri.fromString(s"https://api.github.com/repos/$owner/$repo/issues/events")
-
+class EtagPolling(client: Client, pollingUri: Uri) {
   def responses: Process[Task, Response] =
     Process.iterateEval(Response())(pollingIteration)
 
@@ -19,7 +17,7 @@ class EtagPolling(client: Client, owner: String, repo: String) {
 
   private def nextRequest(previousResponse: Response): Request =
     Request (
-      uri = githubApiUri,
+      uri = pollingUri,
       headers =
         getETag(previousResponse)
           .map(e => Headers(Header("If-None-Match", e)))
