@@ -4,7 +4,7 @@ import scalaz.concurrent.Task
 import me.rexim.issuestant.github.EventsSource
 import me.rexim.issuestant.github.model._
 
-// TODO(7ca7cee3-8fdc-4f9e-bd60-c4229b64f02b): Permalink Protocol FSM
+// TODO(#42): Permalink Protocol FSM
 //
 // May supersede 1cdf1e3c-d19b-493d-9d33-f88c92ee24e3
 //
