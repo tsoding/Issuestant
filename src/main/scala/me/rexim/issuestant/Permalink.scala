@@ -4,9 +4,10 @@ import scalaz.concurrent.Task
 import me.rexim.issuestant.github.EventsSource
 import me.rexim.issuestant.github.model._
 
-// TODO(#42): Permalink Protocol FSM
+// TODO(#37): Implement Permalink
 //
-// May supersede #37
+// Introduce dependencies that enable Permalink with modifying
+// comments, modifying issue descriptions and fileing issues.
 //
 // The Permalink service should be essentially an FSM. The full set of
 // the possible states of such FSM should be represented by ADT. For
@@ -18,11 +19,6 @@ import me.rexim.issuestant.github.model._
 //   case class PermalinkServingState(..) extends PermalinkProtocol
 //   case class PernalinkAskPermissionState(..) extends PermalinkProtocol
 // ```
-
-// TODO(#37): Implement Permalink
-//
-// Introduce dependencies that enable Permalink with modifying
-// comments, modifying issue descriptions and fileing issues.
 
 /** Issuestant service for Permalink protocol (see doc/Permalink.md)
   *
