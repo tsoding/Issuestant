@@ -11,7 +11,7 @@ import org.http4s.server.blaze._
 import org.http4s.client.blaze._
 
 object Main extends ServerApp {
-  // TODO(19f86d8b-7c7f-4acc-af5b-a3a4c29cec5c): Use the HTTP port passed by heroku
+  // TODO(#33): Use the HTTP port passed by heroku
   override def server(args: List[String]): Task[Server] = {
     new Permalink(new EventsSource (
       client = PooledHttp1Client(),
