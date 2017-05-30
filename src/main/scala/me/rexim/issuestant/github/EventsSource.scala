@@ -32,7 +32,7 @@ class EventsSource (client: Client, owner: String, repo: String) {
 
   private lazy val \/-(githubApiUri) = Uri.fromString(s"https://api.github.com/repos/$owner/$repo/issues/events")
 
-  // TODO(4369af78-08f6-45d7-8399-c5ef1f97808a): Get rid of wart suppress
+  // TODO(#46): Get rid of wart suppress
   @SuppressWarnings(Array("org.wartremover.warts.Any"))
   def events: Process[Task, Event] = responses.flatMap(extractEvents)
 
