@@ -10,11 +10,13 @@ import scalaz.concurrent._
 import me.rexim.issuestant.github.model.Event
 
 import org.http4s._
+import org.http4s.util._
 import org.http4s.client._
 import org.http4s.Http4s._
 import org.http4s.Status._
 import org.http4s.Method._
 import org.http4s.EntityDecoder
+import scalaz._
 
 /** The source of GitHub events
   *
@@ -26,20 +28,13 @@ import org.http4s.EntityDecoder
   * @param repo the name of the repo
   */
 // $COVERAGE-OFF$
-class EventsSource (client: Client, owner: String, repo: String) {
-  // TODO(4369af78-08f6-45d7-8399-c5ef1f97808a): Get rid of wart suppress
+class EventsSource (etagPolling: EtagPolling) {
+
+  // TODO(#46): Get rid of wart suppress
   @SuppressWarnings(Array("org.wartremover.warts.Any"))
-  def events: Process[Task, Event] =
-    Process
-      .iterateEval(Response())(pollingIteration)
-      .flatMap((response) => extractEvents(response))
+  def events: Process[Task, Event] = etagPolling.responses.flatMap(extractEvents)
 
-  // TODO(e4581c14-8db7-4e1b-90f0-0b8faec52a33): Implement EventsSource.pollingIteration
-  //
-  // Extract ETag from the previousResponse and use it for polling the next events
-  private def pollingIteration(previousResponse: Response): Task[Response] = ???
-
-  // TODO(6900c3e4-7c15-42cc-9389-de3947625ce9): Implement EventsSource.extractEvents
+  // TODO(#48): Implement EventsSource.extractEvents
   private def extractEvents(response: Response): Process[Task, Event] = ???
 }
 // $COVERAGE-ON$
