@@ -3,7 +3,6 @@ package me.rexim.issuestant
 import scalaz.concurrent.Task
 import me.rexim.issuestant.github.EventsSource
 import me.rexim.issuestant.github.model._
-import me.rexim.issuestant.polling._
 
 // TODO(7ca7cee3-8fdc-4f9e-bd60-c4229b64f02b): Permalink Protocol FSM
 //
@@ -33,15 +32,7 @@ import me.rexim.issuestant.polling._
   * @param eventSource the source of GitHub events
   */
 // $COVERAGE-OFF$
-class Permalink(eventSource: EventsSource) extends Pollable {
-  /** An update iteration of Permalink service
-    *
-    * Polls the recent events from the event source, performs the
-    * permalinking actions and returns Permalink object with the next
-    * state.
-    *
-    * @return next state of the Permalink service
-    */
-  def update: Task[Pollable] = ???
+class Permalink(eventSource: EventsSource) {
+  def asTask: Task[Unit] = ???
 }
 // $COVERAGE-ON$
