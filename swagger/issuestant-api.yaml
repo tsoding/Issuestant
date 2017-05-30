@@ -1,4 +1,4 @@
-# TODO: Improve swagger experience
+# TODO(#34): Improve swagger experience
 #
 # Right now it's just a YAML file with the API specification. Anyone can use
 # it however they want. I'd like to improve this experience somehow. For example,
