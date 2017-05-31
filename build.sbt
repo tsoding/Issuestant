@@ -28,13 +28,6 @@ libraryDependencies ++= Seq(
   "org.clapper" %% "grizzled-slf4j" % "1.0.2"
 )
 
-wartremoverErrors in (Compile, compile) ++= Warts.unsafe
-
-wartremoverErrors in Test ++= Warts.unsafe diff Seq(
-  // We exclude only the Warts that are broken by idiomatically
-  // correct ScalaTest code
-
-  Wart.NonUnitStatements // All ScalaTest assertions return Assertion trait marker instead of Unit
-)
-
 enablePlugins(JavaAppPackaging)
+
+// TODO: decide the destiny of wartremover
