@@ -8,11 +8,10 @@ import scalaz._
 import scalaz.stream._
 import scalaz.concurrent._
 
-// $COVERAGE-OFF$
 // TODO(#51): Implement Unit Tests for me.rexim.issuestant.github.EtagPolling
 class EtagPolling(client: Client, pollingUri: Uri) {
   def responses: Process[Task, Response] =
-    Process.iterateEval(Response())(pollingIteration)
+    Process.iterateEval(Response())(pollingIteration).tail
 
   private def getETag(response: Response): Option[String] =
     response.headers.get(CaseInsensitiveString("ETag")).map(_.value)
@@ -29,4 +28,3 @@ class EtagPolling(client: Client, pollingUri: Uri) {
   private def pollingIteration(previousResponse: Response): Task[Response] =
     client.fetch[Response](nextRequest(previousResponse))((x) => Task(x))
 }
-// $COVERAGE-ON$
