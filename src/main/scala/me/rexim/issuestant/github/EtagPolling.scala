@@ -8,7 +8,6 @@ import scalaz._
 import scalaz.stream._
 import scalaz.concurrent._
 
-// TODO(#51): Implement Unit Tests for me.rexim.issuestant.github.EtagPolling
 class EtagPolling(client: Client, pollingUri: Uri) {
   def responses: Process[Task, Response] =
     Process.iterateEval(Response())(pollingIteration).tail
