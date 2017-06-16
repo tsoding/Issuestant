@@ -16,8 +16,8 @@ class EtagLogging {
 
   lazy val client: Client = Client(
     open = HttpService.lift { (request) =>
-      requestLog += request
       Task {
+        requestLog += request
         Response(
           status = Status.Ok,
           headers = Headers(
