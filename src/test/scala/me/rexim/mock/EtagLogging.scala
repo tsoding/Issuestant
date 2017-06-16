@@ -8,6 +8,15 @@ import org.http4s.client._
 
 import scalaz.concurrent._
 
+// TODO: Make ETagLogging less stateful
+//
+// Something like
+// ```scala
+// val (requests, responses) = EtagLogging { client =>
+//   new EtagPolling(client, Uri(path = "/rexim")).responses.take(5)
+// }
+// ```
+// or similar
 class EtagLogging {
   private val requestLog: ListBuffer[Request] = ListBuffer.empty
 
