@@ -8,6 +8,15 @@ import scalaz._
 import scalaz.stream._
 import scalaz.concurrent._
 
+// TODO: Make ETagPolling less stateful
+//
+// Something like
+// ```scala
+// val (requests, responses) = EtagLogging { client =>
+//   new EtagPolling(client, Uri(path = "/rexim")).responses.take(5)
+// }
+// ```
+// or similar
 class EtagPolling(client: Client, pollingUri: Uri) {
   def responses: Process[Task, Response] =
     Process.iterateEval(Response())(pollingIteration).tail
