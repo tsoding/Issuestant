@@ -11,6 +11,7 @@ class EtagPollingSpec extends FlatSpec with Matchers {
   behavior of "EtagPolling"
 
   it should "reuse etag header for the service response" in {
+    // TODO: Use org.http4s.headers._ everywhere instead of CaseInsensitiveString as header name
     val etagName = CaseInsensitiveString("Etag")
     val ifNoneMatchName = CaseInsensitiveString("If-None-Match")
 
