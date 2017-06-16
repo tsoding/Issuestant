@@ -5,11 +5,15 @@ import me.rexim.issuestant.mock._
 
 import org.http4s._
 import org.http4s.client._
+import org.http4s.util._
 
 class EtagPollingSpec extends FlatSpec with Matchers {
   behavior of "EtagPolling"
 
   it should "reuse etag header for the service response" in {
+    val etagName = CaseInsensitiveString("Etag")
+    val ifNoneMatchName = CaseInsensitiveString("If-None-Match")
+
     val requestCount = 5
     val requestUri = Uri(path = "/rexim")
 
@@ -23,6 +27,8 @@ class EtagPollingSpec extends FlatSpec with Matchers {
     val requests = etagLogging.log
 
     requests.map(_.uri) should be ((1 to requestCount).map(_ => requestUri))
-    (Nil :: responses.map(_.headers.map(_.value)).init) should be (requests.map(_.headers.map(_.value)))
+
+    (None :: responses.map(_.headers.get(etagName).map(_.value)).init) should
+      be (requests.map(_.headers.get(ifNoneMatchName).map(_.value)))
   }
 }
