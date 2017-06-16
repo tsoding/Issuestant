@@ -30,7 +30,7 @@ libraryDependencies ++= Seq(
 
 enablePlugins(JavaAppPackaging)
 
-// TODO: decide the destiny of wartremover
+// TODO(#53): decide the destiny of wartremover
 //
 // Wartremover doesn't actually help with lots of false positives on
 // various thirdparty libraries. We need to decide if we want to
