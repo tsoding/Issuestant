@@ -8,7 +8,7 @@ import org.http4s.client._
 
 import scalaz.concurrent._
 
-// TODO: Make ETagLogging less stateful
+// TODO(#55): Make ETagLogging less stateful
 //
 // Something like
 // ```scala
