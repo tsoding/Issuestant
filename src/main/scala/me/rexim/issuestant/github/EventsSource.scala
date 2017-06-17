@@ -29,9 +29,6 @@ import scalaz._
   */
 // $COVERAGE-OFF$
 class EventsSource (etagPolling: EtagPolling) {
-
-  // TODO(#46): Get rid of wart suppress
-  @SuppressWarnings(Array("org.wartremover.warts.Any"))
   def events: Process[Task, Event] = etagPolling.responses.flatMap(extractEvents)
 
   // TODO(#48): Implement EventsSource.extractEvents
