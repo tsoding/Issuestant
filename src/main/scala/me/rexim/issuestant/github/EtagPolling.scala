@@ -10,7 +10,7 @@ import scalaz.concurrent._
 
 class EtagPolling(client: Client, pollingUri: Uri) {
   def responses: Process[Task, Response] =
-    Process.iterateEval(Response())(pollingIteration).tail
+    Process.iterateEval(Response())(pollingIteration).tail.filter(_.status == Status.Ok)
 
   private def getETag(response: Response): Option[String] =
     response.headers.get(CaseInsensitiveString("ETag")).map(_.value)

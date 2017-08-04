@@ -1,3 +1,3 @@
 package me.rexim.issuestant.github.model
 
-trait EventPayload
+case class IssueEvent(event: String)
