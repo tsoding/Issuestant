@@ -1,5 +1,6 @@
 package me.rexim.issuestant
 
+import io.circe._
 
 import me.rexim.issuestant.github.EventsSource
 import me.rexim.issuestant.github.model._
@@ -33,7 +34,7 @@ import org.http4s._
   */
 // $COVERAGE-OFF$
 class Permalink[E](eventSource: EventsSource[E]) {
-  def asTask(implicit decoder: EntityDecoder[List[E]]): Task[Unit] = Task {
+  def asTask(implicit decoder: Decoder[E]): Task[Unit] = Task {
     val _ = eventSource.events.runLog.run
   }
 }

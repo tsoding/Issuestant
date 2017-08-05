@@ -34,13 +34,17 @@ import grizzled.slf4j.Logging
 // $COVERAGE-OFF$
 class EventsSource[E] (etagPolling: EtagPolling) extends Logging {
 
-  def events(implicit decoder: EntityDecoder[List[E]]): Process[Task, E] =
+  def events(implicit decoder: Decoder[E]): Process[Task, E] =
     etagPolling.responses
       .flatMap(extractEvents)
       .map((e) => { info(s"New GitHub event: ${e}"); e })
 
   private def extractEvents(response: Response)
-    (implicit decoder: EntityDecoder[List[E]]): Process[Task, E] =
+    (implicit decoder: Decoder[E]): Process[Task, E] = {
+    implicit val eventHttp4s = jsonOf[E]
+    implicit val listEventHttp4s = jsonOf[List[E]]
+
     Process.emitAll(response.as[List[E]].run)
+  }
 }
 // $COVERAGE-ON$
