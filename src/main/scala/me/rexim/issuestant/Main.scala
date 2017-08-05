@@ -2,6 +2,7 @@ package me.rexim.issuestant
 
 import me.rexim.issuestant.github._
 import me.rexim.issuestant.github.model._
+import me.rexim.issuestant.github.uri._
 
 import io.circe._
 import io.circe.generic.auto._

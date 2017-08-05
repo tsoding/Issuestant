@@ -1,4 +1,4 @@
-package me.rexim.issuestant.github
+package me.rexim.issuestant.github.uri
 
 import scalaz._
 import org.http4s._
