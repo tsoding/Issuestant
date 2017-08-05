@@ -29,6 +29,8 @@ import me.rexim.issuestant.github.model._
   */
 // $COVERAGE-OFF$
 class Permalink(eventSource: EventsSource) {
-  def asTask: Task[Unit] = ???
+  def asTask: Task[Unit] = Task {
+    val _ = eventSource.events.runLog.run
+  }
 }
 // $COVERAGE-ON$
