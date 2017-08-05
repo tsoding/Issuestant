@@ -42,7 +42,7 @@ class EventsSource (etagPolling: EtagPolling) extends Logging {
   private implicit val issueEventHttp4s = jsonOf[IssueEvent]
   private implicit val listIssueEventHttp4s = jsonOf[List[IssueEvent]]
 
-  private def extractEvents(response: Response): Process[Task, IssueEvent] = 
+  private def extractEvents(response: Response): Process[Task, IssueEvent] =
     Process.emitAll(response.as[List[IssueEvent]].run)
 }
 // $COVERAGE-ON$
