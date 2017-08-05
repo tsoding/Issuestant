@@ -22,9 +22,9 @@ import org.http4s._
 object Main extends ServerApp {
   // TODO(#33): Use the HTTP port passed by heroku
   override def server(args: List[String]): Task[Server] = {
-    new Permalink(new EventsSource[IssueEvent](new EtagPolling(
+    new Permalink(new EventsSource[ActivityEvent](new EtagPolling(
       client = PooledHttp1Client(),
-      pollingUri = new RepoIssuesEventsUri(
+      pollingUri = new RepoEventsUri(
         owner = "tsoding",
         repo = "issuestant-playground"
       ).asUri
