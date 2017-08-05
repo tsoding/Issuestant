@@ -23,7 +23,7 @@ object Main extends ServerApp {
   override def server(args: List[String]): Task[Server] = {
     new Permalink(new EventsSource[IssueEvent](new EtagPolling(
       client = PooledHttp1Client(),
-      pollingUri = new RepoEventsUri(
+      pollingUri = new RepoIssuesEventsUri(
         owner = "tsoding",
         repo = "issuestant-playground"
       ).asUri
