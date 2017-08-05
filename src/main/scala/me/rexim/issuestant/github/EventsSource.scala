@@ -20,6 +20,8 @@ import scalaz._
 
 import me.rexim.issuestant.github.model._
 
+import grizzled.slf4j.Logging
+
 /** The source of GitHub events
   *
   * The class is stateless. The next state is returned by nextEvents()
@@ -30,9 +32,11 @@ import me.rexim.issuestant.github.model._
   * @param repo the name of the repo
   */
 // $COVERAGE-OFF$
-class EventsSource (etagPolling: EtagPolling) {
+class EventsSource (etagPolling: EtagPolling) extends Logging {
   def events: Process[Task, IssueEvent] =
-    etagPolling.responses.flatMap(extractEvents)
+    etagPolling.responses
+      .flatMap(extractEvents)
+      .map((e) => { info(s"New GitHub event: ${e}"); e })
 
   private implicit val issueEventCirce: Decoder[IssueEvent] = Decoder.forProduct1("event")(IssueEvent)
   private implicit val issueEventHttp4s = jsonOf[IssueEvent]
