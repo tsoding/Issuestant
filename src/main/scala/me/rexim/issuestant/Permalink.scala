@@ -1,8 +1,12 @@
 package me.rexim.issuestant
 
-import scalaz.concurrent.Task
+
 import me.rexim.issuestant.github.EventsSource
 import me.rexim.issuestant.github.model._
+
+import scalaz.concurrent.Task
+
+import org.http4s._
 
 // TODO(#37): Implement Permalink
 //
@@ -28,8 +32,8 @@ import me.rexim.issuestant.github.model._
   * @param eventSource the source of GitHub events
   */
 // $COVERAGE-OFF$
-class Permalink(eventSource: EventsSource) {
-  def asTask: Task[Unit] = Task {
+class Permalink[E](eventSource: EventsSource[E]) {
+  def asTask(implicit decoder: EntityDecoder[List[E]]): Task[Unit] = Task {
     val _ = eventSource.events.runLog.run
   }
 }
