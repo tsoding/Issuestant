@@ -1,6 +1,4 @@
-package me.rexim.issuestant.github
-
-import me.rexim.issuestant.github.uri._
+package me.rexim.issuestant.github.uri
 
 import scalaz._
 import org.scalatest._
