@@ -19,7 +19,9 @@ import org.http4s.client.blaze._
 import org.http4s.circe._
 import org.http4s._
 
-object Main extends ServerApp {
+import grizzled.slf4j.Logging
+
+object Main extends ServerApp with Logging {
   // TODO(#33): Use the HTTP port passed by heroku
   override def server(args: List[String]): Task[Server] = {
     new Permalink(new EventsSource[ActivityEvent](new EtagPolling(
@@ -28,7 +30,7 @@ object Main extends ServerApp {
         owner = "tsoding",
         repo = "issuestant-playground"
       ).asUri
-    ))).asTask.runAsync { _ => }
+    ))).asTask.runAsync { _.leftMap(error("Permalinking failed", _)) }
 
     BlazeBuilder.bindHttp(8080, "localhost").mountService(HelloService.service, "/api").start
   }
