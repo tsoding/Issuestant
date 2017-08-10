@@ -32,19 +32,11 @@ import grizzled.slf4j.Logging
   * @param repo the name of the repo
   */
 // $COVERAGE-OFF$
-class EventsSource[E] (etagPolling: EtagPolling) extends Logging {
-
+class EventsSource[E] (etagPolling: EtagPolling[List[E]]) extends Logging {
+  // TODO(#66): EventsSource should filter out events that already happened
   def events(implicit decoder: Decoder[E]): Process[Task, E] =
     etagPolling.responses
-      .flatMap(extractEvents)
+      .flatMap(Process.emitAll)
       .map((e) => { info(s"New GitHub event: ${e}"); e })
-
-  private def extractEvents(response: Response)
-    (implicit decoder: Decoder[E]): Process[Task, E] = {
-    implicit val eventHttp4s = jsonOf[E]
-    implicit val listEventHttp4s = jsonOf[List[E]]
-
-    Process.emitAll(response.as[List[E]].run)
-  }
 }
 // $COVERAGE-ON$

@@ -7,6 +7,9 @@ import org.http4s._
 import org.http4s.client._
 
 import scalaz.concurrent._
+import scalaz.stream._
+
+import scodec.bits._
 
 // TODO(#55): Make ETagLogging less stateful
 //
@@ -26,12 +29,14 @@ class EtagLogging {
   lazy val client: Client = Client(
     open = HttpService.lift { (request) =>
       Task {
+        val etag = randomEtag()
         requestLog += request
         Response(
           status = Status.Ok,
           headers = Headers(
-            Header("ETag", randomEtag())
-          )
+            Header("ETag", etag)
+          ),
+          body = Process.emit(ByteVector(s"""\"$etag\"""".getBytes))
         )
       }
     }.map((r) => DisposableResponse(r, Task({}))),
