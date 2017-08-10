@@ -15,10 +15,13 @@ import scalaz.stream._
 import scalaz.concurrent._
 
 class EtagPolling[E](client: Client, pollingUri: Uri) {
+  // TODO: make EtagPolling[E].Item a class, not a tuple
   type Item = (Option[String], Option[E])
 
-  def responses(implicit decoder: Decoder[E]): Process[Task, Item] =
-    Process.iterateEval((None, None): Item)(pollingIteration(_)(decoder)).tail
+  def responses(implicit decoder: Decoder[E]): Process[Task, E] =
+    Process
+      .iterateEval((None, None): Item)(pollingIteration(_)(decoder))
+      .collect { case (_, Some(e)) => e }
 
   private def getETag(response: Response): Option[String] =
     response.headers.get(CaseInsensitiveString("ETag")).map(_.value)

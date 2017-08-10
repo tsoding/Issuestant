@@ -34,7 +34,7 @@ class EtagPollingSpec extends FlatSpec with Matchers {
 
     requests.map(_.uri) should be ((1 to requestCount).map(_ => requestUri))
 
-    (None :: responses.map(_._1)) should
+    (None :: responses.map(Some(_)).init) should
       be (requests.map(_.headers.get(ifNoneMatchName).map(_.value)))
   }
 }
