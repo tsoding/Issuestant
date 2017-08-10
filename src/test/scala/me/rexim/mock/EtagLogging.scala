@@ -7,6 +7,9 @@ import org.http4s._
 import org.http4s.client._
 
 import scalaz.concurrent._
+import scalaz.stream._
+
+import scodec.bits._
 
 // TODO(#55): Make ETagLogging less stateful
 //
@@ -31,7 +34,8 @@ class EtagLogging {
           status = Status.Ok,
           headers = Headers(
             Header("ETag", randomEtag())
-          )
+          ),
+          body = Process.emit(ByteVector("\"hello\"".getBytes))
         )
       }
     }.map((r) => DisposableResponse(r, Task({}))),

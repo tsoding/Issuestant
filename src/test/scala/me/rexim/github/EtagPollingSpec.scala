@@ -1,5 +1,10 @@
 package me.rexim.issuestant.github
 
+import io.circe._
+import io.circe.generic.auto._
+import io.circe.parser._
+import io.circe.syntax._
+
 import org.scalatest._
 import me.rexim.issuestant.mock._
 
@@ -19,7 +24,7 @@ class EtagPollingSpec extends FlatSpec with Matchers {
     val requestUri = Uri(path = "/rexim")
 
     val etagLogging = new EtagLogging
-    val etagPolling = new EtagPolling(
+    val etagPolling = new EtagPolling[String](
       etagLogging.client,
       requestUri
     )
@@ -29,7 +34,7 @@ class EtagPollingSpec extends FlatSpec with Matchers {
 
     requests.map(_.uri) should be ((1 to requestCount).map(_ => requestUri))
 
-    (None :: responses.map(_.headers.get(etagName).map(_.value)).init) should
+    (None :: responses.map(_._1)) should
       be (requests.map(_.headers.get(ifNoneMatchName).map(_.value)))
   }
 }
