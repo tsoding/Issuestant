@@ -15,7 +15,7 @@ import scalaz.stream._
 import scalaz.concurrent._
 
 class EtagPolling[E](client: Client, pollingUri: Uri) {
-  // TODO: make EtagPolling[E].Item a class, not a tuple
+  // TODO(#65): make EtagPolling[E].Item a class, not a tuple
   type Item = (Option[String], Option[E])
 
   def responses(implicit decoder: Decoder[E]): Process[Task, E] =
