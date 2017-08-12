@@ -33,8 +33,8 @@ import org.http4s._
   * @param eventSource the source of GitHub events
   */
 // $COVERAGE-OFF$
-class Permalink[E](eventSource: ActivityEventsSource) {
-  def asTask(implicit decoder: Decoder[E]): Task[Unit] = Task {
+class Permalink(eventSource: ActivityEventsSource) {
+  def asTask: Task[Unit] = Task {
     val _ = eventSource.events.runLog.run
   }
 }
