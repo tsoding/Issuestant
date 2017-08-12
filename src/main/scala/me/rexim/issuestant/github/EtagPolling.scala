@@ -15,36 +15,13 @@ import scalaz.stream._
 import scalaz.concurrent._
 
 class EtagPolling[E](client: Client, pollingUri: Uri) {
-  // TODO(#65): make EtagPolling[E].Item a class, not a tuple
-  type Item = (Option[String], Option[E])
-
   def responses(implicit decoder: Decoder[E]): Process[Task, E] =
     Process
-      .iterateEval((None, None): Item)(pollingIteration(_)(decoder))
-      .collect { case (_, Some(e)) => e }
+      .iterateEval(new EtagItem[E]())(pollingIteration)
+      .map(_.asEntity)
+      .collect { case Some(e) => e }
 
-  private def getETag(response: Response): Option[String] =
-    response.headers.get(CaseInsensitiveString("ETag")).map(_.value)
-
-  private def nextRequest(previousItem: Item): Request =
-    Request (
-      uri = pollingUri,
-      headers =
-        previousItem._1
-          .map(e => Headers(Header("If-None-Match", e)))
-          .getOrElse(Headers.empty)
-    )
-
-  private def pollingIteration(previousItem: Item)(implicit decoder: Decoder[E]): Task[Item] =
-    client.fetch[Item](nextRequest(previousItem)) { (response) =>
-      implicit val http4sDecoder = jsonOf[E]
-
-      if (response.status == Status.Ok) {
-        response.as[E].map { e =>
-          (getETag(response), Some(e))
-        }
-      } else {
-        Task((getETag(response), None))
-      }
-    }
+  private def pollingIteration(prevItem: EtagItem[E])
+                              (implicit decoder: Decoder[E]): Task[EtagItem[E]] =
+    client.fetch[EtagItem[E]](prevItem.nextRequest(pollingUri))(EtagItem.fromResponse)
 }
