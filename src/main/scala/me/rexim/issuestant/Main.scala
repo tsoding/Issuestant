@@ -24,7 +24,7 @@ import grizzled.slf4j.Logging
 object Main extends ServerApp with Logging {
   // TODO(#33): Use the HTTP port passed by heroku
   override def server(args: List[String]): Task[Server] = {
-    new Permalink(new EventsSource[ActivityEvent](new EtagPolling(
+    new Permalink(new ActivityEventsSource(new EtagPolling(
       client = PooledHttp1Client(),
       pollingUri = new RepoEventsUri(
         owner = "tsoding",
