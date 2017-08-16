@@ -19,6 +19,7 @@ import org.http4s.EntityDecoder
 import scalaz._
 
 import me.rexim.issuestant.github.model._
+import me.rexim.issuestant.stream._
 
 import grizzled.slf4j.Logging
 
@@ -33,8 +34,15 @@ import grizzled.slf4j.Logging
   */
 // $COVERAGE-OFF$
 class ActivityEventsSource(etagPolling: EtagPolling[List[ActivityEvent]]) extends Logging {
+  // TODO: Implement timestamp based event filtering from #72
   def events: Process[Task, ActivityEvent] =
-    etagPolling.responses
+    etagPolling
+      .responses
+      // TODO: Extract filtering pair into a separate entity
+      .scanl((Set[String](), List[ActivityEvent]())) {
+        case ((seen, _), events) => (seen ++ events.map(_.id), events.filterNot(e => seen.contains(e.id)))
+      }
+      .map(_._2)
       .flatMap(Process.emitAll)
       .map((e) => { info(s"New GitHub event: ${e}"); e })
 }
