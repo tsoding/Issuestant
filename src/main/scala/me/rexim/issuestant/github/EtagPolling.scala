@@ -14,8 +14,8 @@ import scalaz._
 import scalaz.stream._
 import scalaz.concurrent._
 
-class EtagPolling[E](client: Client, pollingUri: Uri) {
-  def responses(implicit decoder: Decoder[E]): Process[Task, E] =
+class EtagPolling[E](client: Client, pollingUri: Uri) extends JsonEntitiesSource[E] {
+  def entities(implicit decoder: Decoder[E]): Process[Task, E] =
     Process
       .iterateEval(new EtagItem[E]())(pollingIteration)
       .map(_.asEntity)

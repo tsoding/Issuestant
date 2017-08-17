@@ -23,11 +23,11 @@ import me.rexim.issuestant.stream._
 
 import grizzled.slf4j.Logging
 
-class ActivityEventsSource(etagPolling: EtagPolling[List[ActivityEvent]]) extends Logging {
+class ActivityEventsSource(jsonEntitiesSource: JsonEntitiesSource[List[ActivityEvent]]) extends Logging {
   // TODO: Implement timestamp based event filtering from #72
   def events: Process[Task, ActivityEvent] =
-    etagPolling
-      .responses
+    jsonEntitiesSource
+      .entities
       // TODO: Extract filtering pair into a separate entity
       .scanl((Set[String](), List[ActivityEvent]())) {
         case ((seen, _), events) => (seen ++ events.map(_.id), events.filterNot(e => seen.contains(e.id)))
@@ -36,3 +36,4 @@ class ActivityEventsSource(etagPolling: EtagPolling[List[ActivityEvent]]) extend
       .flatMap(Process.emitAll)
       .map((e) => { info(s"New GitHub event: ${e}"); e })
 }
+
