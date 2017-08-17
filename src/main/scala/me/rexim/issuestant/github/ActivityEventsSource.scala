@@ -23,15 +23,6 @@ import me.rexim.issuestant.stream._
 
 import grizzled.slf4j.Logging
 
-/** The source of GitHub events
-  *
-  * The class is stateless. The next state is returned by nextEvents()
-  * method. The state should be managed by the invoker.
-  *
-  * @param client an http client for requesting GitHub API
-  * @param owner the owner of the repo
-  * @param repo the name of the repo
-  */
 class ActivityEventsSource(etagPolling: EtagPolling[List[ActivityEvent]]) extends Logging {
   // TODO: Implement timestamp based event filtering from #72
   def events: Process[Task, ActivityEvent] =
