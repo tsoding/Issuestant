@@ -32,7 +32,6 @@ import grizzled.slf4j.Logging
   * @param owner the owner of the repo
   * @param repo the name of the repo
   */
-// $COVERAGE-OFF$
 class ActivityEventsSource(etagPolling: EtagPolling[List[ActivityEvent]]) extends Logging {
   // TODO: Implement timestamp based event filtering from #72
   def events: Process[Task, ActivityEvent] =
@@ -46,4 +45,3 @@ class ActivityEventsSource(etagPolling: EtagPolling[List[ActivityEvent]]) extend
       .flatMap(Process.emitAll)
       .map((e) => { info(s"New GitHub event: ${e}"); e })
 }
-// $COVERAGE-ON$
