@@ -29,7 +29,7 @@ class EtagPollingSpec extends FlatSpec with Matchers {
       requestUri
     )
 
-    val responses = etagPolling.responses.take(requestCount).runLog.run.toList
+    val responses = etagPolling.entities.take(requestCount).runLog.run.toList
     val requests = etagLogging.log
 
     requests.map(_.uri) should be ((1 to requestCount).map(_ => requestUri))
