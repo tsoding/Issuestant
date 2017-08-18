@@ -24,7 +24,7 @@ import me.rexim.issuestant.stream._
 import grizzled.slf4j.Logging
 
 class ActivityEventsSource(jsonEntitiesSource: JsonEntitiesSource[List[ActivityEvent]]) extends Logging {
-  // TODO: Implement timestamp based event filtering from #72
+  // TODO(#75): Implement timestamp based event filtering from #72
   def events: Process[Task, ActivityEvent] =
     jsonEntitiesSource
       .entities
