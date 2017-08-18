@@ -13,6 +13,6 @@ package object stream {
         M.map(C.attempt(process.uncons)) {
           case -\/(_) => Process.empty
           case \/-((x1, rest)) => rest.scanl(f(x0, x1))(f)
-        }).flatMap(identity) // TODO: get rid of flatMap(identity)
+        }).flatMap(identity) // TODO(#78): get rid of flatMap(identity)
   }
 }
