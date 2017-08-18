@@ -28,7 +28,7 @@ class ActivityEventsSource(jsonEntitiesSource: JsonEntitiesSource[List[ActivityE
   def events: Process[Task, ActivityEvent] =
     jsonEntitiesSource
       .entities
-      // TODO: Extract filtering pair into a separate entity
+      // TODO(#76): Extract filtering pair into a separate entity
       .scanl((Set[String](), List[ActivityEvent]())) {
         case ((seen, _), events) => (seen ++ events.map(_.id), events.filterNot(e => seen.contains(e.id)))
       }
